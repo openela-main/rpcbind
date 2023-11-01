@@ -1,0 +1,12 @@
+diff -up rpcbind-1.2.5/src/util.c.orig rpcbind-1.2.5/src/util.c
+--- rpcbind-1.2.5/src/util.c.orig	2022-05-31 08:47:51.624211564 -0400
++++ rpcbind-1.2.5/src/util.c	2022-05-31 08:49:54.577060858 -0400
+@@ -287,7 +287,7 @@ network_init()
+ 	int s;
+ #endif
+ 	int ecode;
+-	struct addrinfo hints, *res;
++	struct addrinfo hints, *res = NULL;
+ 
+ 	memset(&hints, 0, sizeof hints);
+ 	hints.ai_family = AF_INET;
