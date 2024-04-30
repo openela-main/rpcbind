@@ -4,7 +4,7 @@
 
 Name:           rpcbind
 Version:        1.2.6
-Release:        5%{?dist}
+Release:        7%{?dist}
 Summary:        Universal Addresses to RPC Program Number Mapper
 License:        BSD
 URL:            https://sourceforge.net/projects/rpcbind/
@@ -125,6 +125,14 @@ fi
 %attr(0700, %{rpcbind_user_group}, %{rpcbind_user_group}) %dir %{rpcbind_state_dir}
 
 %changelog
+* Thu Feb 15 2024 Pavel Reichl <preichl@redhat.com> - 1.2.6-7
+- Fix gating - use explicit script name to run the test
+- Related: RHEL-7884
+
+* Mon Feb 12 2024 Pavel Reichl <preichl@redhat.com> - 1.2.6-6
+- Add support for gating
+- Related: RHEL-7884
+
 * Tue Sep  6 2022 Steve Dickson <steved@redhat.com> - 1.2.6-5
 - Fixed a typo in changelog (bz 2115517)
 
