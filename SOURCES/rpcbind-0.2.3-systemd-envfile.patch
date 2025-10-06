@@ -1,0 +1,11 @@
+diff -up rpcbind-1.2.6/systemd/rpcbind.service.in.orig rpcbind-1.2.6/systemd/rpcbind.service.in
+--- rpcbind-1.2.6/systemd/rpcbind.service.in.orig	2022-07-12 16:18:16.272919592 -0400
++++ rpcbind-1.2.6/systemd/rpcbind.service.in	2022-07-12 16:19:14.153189756 -0400
+@@ -12,6 +12,7 @@ Wants=rpcbind.target
+ [Service]
+ Type=notify
+ # distro can provide a drop-in adding EnvironmentFile=-/??? if needed.
++EnvironmentFile=/etc/sysconfig/rpcbind
+ ExecStart=@_sbindir@/rpcbind $RPCBIND_OPTIONS @warmstarts_opt@ -f
+ 
+ [Install]
