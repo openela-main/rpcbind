@@ -4,7 +4,7 @@
 
 Name:           rpcbind
 Version:        1.2.5
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Universal Addresses to RPC Program Number Mapper
 Group:          System Environment/Daemons
 License:        BSD
@@ -43,6 +43,10 @@ Patch003: rpcbind-1.2.5-dowgrade-priority-callit.patch
 Patch004: rpcbind-1.2.5-network_init.patch
 Patch005: rpcbind-1.2.5-double-free.patch
 
+# RHEL-266668 - CVE-2026-94640
+# http://git.linux-nfs.org/?p=steved/rpcbind.git;a=patch;h=c96fa9a601a5d4f0798d5ae4619ab7aa515356c0
+Patch006: rpcbind-1.2.5-CVE-2026-94640.patch
+
 Patch100: rpcbind-0.2.3-systemd-envfile.patch
 Patch101: rpcbind-0.2.3-systemd-tmpfiles.patch
 Patch102: rpcbind-0.2.4-runstatdir.patch
@@ -74,6 +78,9 @@ RPC calls on a server on that machine.
 
 # 2115209 - rpcbind: free(): double free detected in tcache 2 
 %patch005 -p1
+
+# RHEL-266668 - CVE-2026-94640
+%patch006 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -169,6 +176,11 @@ fi
 %attr(0700, %{rpcbind_user_group}, %{rpcbind_user_group}) %dir %{rpcbind_state_dir}
 
 %changelog
+* Tue Sep 22 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.2.5-11
+- CVE-2026-94640 rpcbind: Unbounded memory allocation in rpcbind statistics tracking allows unauthenticated remote denial of service
+  statistics tracking allows unauthenticated remote denial of service
+  Resolves: RHEL-266668
+
 * Thu Aug  4 2022 Steve Dickson <steved@redhat.com> - 1.2.5-10
 - rpcbind: fix double free in init_transport (bz 2115209)
 
