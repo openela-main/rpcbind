@@ -4,7 +4,7 @@
 
 Name:           rpcbind
 Version:        1.2.7
-Release:        3%{?dist}
+Release:        3%{?dist}.1
 Summary:        Universal Addresses to RPC Program Number Mapper
 License:        BSD-3-Clause
 URL:            http://nfsv4.bullopensource.org
@@ -21,6 +21,10 @@ Requires(pre): coreutils shadow-utils
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd coreutils
+
+# https://issues.redhat.com/browse/RHEL-266672
+# https://git.linux-nfs.org/?p=steved/rpcbind.git;a=patch;h=c96fa9a601a5d4f0798d5ae4619ab7aa515356c0
+Patch001: rpcbind-1.2.7-CVE-2026-94640.patch
 
 Patch100: rpcbind-0.2.3-systemd-envfile.patch
 Patch101: rpcbind-0.2.3-systemd-tmpfiles.patch
@@ -113,6 +117,11 @@ fi
 %attr(0700, %{rpcbind_user_group}, %{rpcbind_user_group}) %dir %{rpcbind_state_dir}
 
 %changelog
+* Mon Sep 28 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.2.7-3.1
+- CVE-2026-94640 rpcbind: Unbounded memory allocation in rpcbind statistics tracking allows unauthenticated remote denial of service
+  statistics tracking allows unauthenticated remote denial of service
+  Resolves: RHEL-266672
+
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 1.2.7-3
 - Bump release for October 2024 mass rebuild:
   Resolves: RHEL-64018
