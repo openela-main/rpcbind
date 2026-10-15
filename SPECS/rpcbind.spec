@@ -4,7 +4,7 @@
 
 Name:           rpcbind
 Version:        1.2.6
-Release:        7%{?dist}
+Release:        7%{?dist}.1
 Summary:        Universal Addresses to RPC Program Number Mapper
 License:        BSD
 URL:            https://sourceforge.net/projects/rpcbind/
@@ -26,6 +26,9 @@ Requires(postun): systemd coreutils
 # RHEL9.1
 #
 Patch001: rpcbind-1.2.6-double-free.patch
+# CVE-2026-94640
+# https://gitlab.com/redhat/rhel/rpms/rpcbind/-/commit/3c30948eb733b2eae7575b93e3119118643f8403
+Patch002: rpcbind-1.2.6-CVE-2026-94640.patch
 
 Patch100: rpcbind-0.2.3-systemd-envfile.patch
 Patch101: rpcbind-0.2.3-systemd-tmpfiles.patch
@@ -125,6 +128,11 @@ fi
 %attr(0700, %{rpcbind_user_group}, %{rpcbind_user_group}) %dir %{rpcbind_state_dir}
 
 %changelog
+* Thu Oct  1 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.2.6-7.1
+- CVE-2026-94640 rpcbind: Unbounded memory allocation in rpcbind statistics tracking allows unauthenticated remote denial of service
+  statistics tracking allows unauthenticated remote denial of service
+- Resolves: RHEL-266677
+
 * Thu Feb 15 2024 Pavel Reichl <preichl@redhat.com> - 1.2.6-7
 - Fix gating - use explicit script name to run the test
 - Related: RHEL-7884
