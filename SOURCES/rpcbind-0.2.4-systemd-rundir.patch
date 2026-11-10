@@ -1,16 +1,16 @@
-diff -up rpcbind-1.2.6/src/rpcbind.c.orig rpcbind-1.2.6/src/rpcbind.c
---- rpcbind-1.2.6/src/rpcbind.c.orig	2022-07-12 16:25:36.422972803 -0400
-+++ rpcbind-1.2.6/src/rpcbind.c	2022-07-12 16:26:00.679085433 -0400
-@@ -143,6 +143,8 @@ static void rbllist_add(rpcprog_t, rpcve
- static void terminate(int);
- static void parseargs(int, char *[]);
+diff -up rpcbind-1.2.8/src/rpcbind.c.orig rpcbind-1.2.8/src/rpcbind.c
+--- rpcbind-1.2.8/src/rpcbind.c.orig	2025-07-26 16:57:24.000000000 -0400
++++ rpcbind-1.2.8/src/rpcbind.c	2025-07-26 17:15:51.933467872 -0400
+@@ -214,6 +214,8 @@ static void version()
+ 	fprintf(stderr, "\n");
+ }
  
 +char *systemdtmp = "/usr/bin/systemd-tmpfiles --create rpcbind.conf";
 +
  int
  main(int argc, char *argv[])
  {
-@@ -150,13 +152,21 @@ main(int argc, char *argv[])
+@@ -221,13 +223,21 @@ main(int argc, char *argv[])
  	void *nc_handle;	/* Net config handle */
  	struct rlimit rl;
  	int maxrec = RPC_MAXDATASIZE;

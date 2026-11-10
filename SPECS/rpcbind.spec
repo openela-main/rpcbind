@@ -3,11 +3,11 @@
 %global rpcbind_state_dir %{_rundir}/rpcbind
 
 Name:           rpcbind
-Version:        1.2.7
-Release:        3%{?dist}.1
+Version:        1.2.9
+Release:        0%{?dist}.2
 Summary:        Universal Addresses to RPC Program Number Mapper
 License:        BSD-3-Clause
-URL:            http://nfsv4.bullopensource.org
+URL:            https://sourceforge.net/projects/rpcbind
 
 Source0:        http://downloads.sourceforge.net/rpcbind/%{name}-%{version}.tar.bz2
 Source1: %{name}.sysconfig
@@ -22,15 +22,11 @@ Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd coreutils
 
-# https://issues.redhat.com/browse/RHEL-266672
-# https://git.linux-nfs.org/?p=steved/rpcbind.git;a=patch;h=c96fa9a601a5d4f0798d5ae4619ab7aa515356c0
-Patch001: rpcbind-1.2.7-CVE-2026-94640.patch
+Patch001: rpcbind-1.2.9-fix-leak-of-nconf-in-main.patch
+Patch002: rpcbind-1.2.9-CVE-2026-94640.patch
 
-Patch100: rpcbind-0.2.3-systemd-envfile.patch
-Patch101: rpcbind-0.2.3-systemd-tmpfiles.patch
-Patch102: rpcbind-0.2.4-runstatdir.patch
-Patch103: rpcbind-0.2.4-systemd-service.patch
-Patch104: rpcbind-0.2.4-systemd-rundir.patch
+Patch100: rpcbind-0.2.3-systemd-tmpfiles.patch
+Patch101: rpcbind-0.2.4-systemd-rundir.patch
 
 Provides: portmap = %{version}-%{release}
 Obsoletes: portmap <= 4.0-65.3
@@ -117,10 +113,17 @@ fi
 %attr(0700, %{rpcbind_user_group}, %{rpcbind_user_group}) %dir %{rpcbind_state_dir}
 
 %changelog
-* Mon Sep 28 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.2.7-3.1
-- CVE-2026-94640 rpcbind: Unbounded memory allocation in rpcbind statistics tracking allows unauthenticated remote denial of service
-  statistics tracking allows unauthenticated remote denial of service
-  Resolves: RHEL-266672
+* Wed Sep 30 2026 Scott Mayhew <smayhew@redhat.com> 1.2.9.0.el10_3.2
+- Bump NVR to get the right build target (RHEL-267041)
+
+* Thu Sep 24 2026 Scott Mayhew <smayhew@redhat.com> 1.2.9-0.el10_3.1
+- Fix CVE-2026-94640 rpcbind: unbounded memory allocation in statistics
+  tracking allows unauthenticated remote denial of service (RHEL-267041)
+
+* Wed Jul  1 2026 Scott Mayhew <smayhew@redhat.com> 1.2.9-0
+- Updated the URL to https://sourceforge.net/projects/rpcbind (RHEL-174800)
+- Updated to latest upstream release: rpcbind-1_2_9 (RHEL-174804)
+- Rename RPCBIND_ARGS to RPCBIND_OPTIONS in /etc/sysconfig/rpcbind (RHEL-174804)
 
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 1.2.7-3
 - Bump release for October 2024 mass rebuild:
